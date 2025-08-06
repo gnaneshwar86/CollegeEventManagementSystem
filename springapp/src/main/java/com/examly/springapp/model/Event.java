@@ -24,7 +24,7 @@ public class Event {
     private Long eventId;
     
     @NotNull(message = "Event name is required")
-    @Size(min = 5, max = 100, message = "Event name must be between 5 and 100 characters")
+    @Size(min = 5, max = 100, message = "eventName must be between 5 and 100 characters")
     @Column(nullable = false)
     private String eventName;
     

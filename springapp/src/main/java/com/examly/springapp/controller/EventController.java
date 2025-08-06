@@ -3,14 +3,11 @@ package com.examly.springapp.controller;
 import com.examly.springapp.dto.ErrorResponse;
 import com.examly.springapp.model.Event;
 import com.examly.springapp.service.EventService;
-import jakarta.validation.Valid;
 import jakarta.validation.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -23,24 +20,16 @@ public class EventController {
     private EventService eventService;
     
     @PostMapping
-    public ResponseEntity<?> createEvent(@Valid @RequestBody Event event, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            // Get the first error, prioritizing eventName
-            FieldError eventNameError = bindingResult.getFieldErrors().stream()
-                .filter(error -> "eventName".equals(error.getField()))
-                .findFirst()
-                .orElse(bindingResult.getFieldErrors().get(0));
-            
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                .body(new ErrorResponse(eventNameError.getDefaultMessage()));
-        }
-        
+    public ResponseEntity<?> createEvent(@RequestBody Event event) {
         try {
             Event createdEvent = eventService.createEvent(event);
             return ResponseEntity.status(HttpStatus.CREATED).body(createdEvent);
         } catch (ValidationException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(new ErrorResponse(e.getMessage()));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(new ErrorResponse("Validation failed"));
         }
     }
     

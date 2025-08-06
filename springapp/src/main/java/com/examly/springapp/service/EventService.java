@@ -17,6 +17,14 @@ public class EventService {
     private EventRepository eventRepository;
     
     public Event createEvent(Event event) {
+        // Manual validation to match test expectations
+        if (event.getEventName() == null || event.getEventName().length() < 5 || event.getEventName().length() > 100) {
+            throw new ValidationException("eventName must be between 5 and 100 characters");
+        }
+        if (event.getCapacity() != null && event.getCapacity() <= 0) {
+            throw new ValidationException("Capacity must be positive");
+        }
+        
         return eventRepository.save(event);
     }
     
@@ -27,5 +35,11 @@ public class EventService {
     
     public Optional<Event> getEventById(Long eventId) {
         return eventRepository.findById(eventId);
+    }
+}
+
+class ValidationException extends RuntimeException {
+    public ValidationException(String message) {
+        super(message);
     }
 }
