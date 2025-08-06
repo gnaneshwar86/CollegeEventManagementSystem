@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.time.LocalDateTime;
 
@@ -25,12 +26,12 @@ public class Registration {
     
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "student_id", nullable = false)
-    @JsonBackReference
+    @JsonIgnoreProperties({"registrations"})
     private Student student;
     
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "event_id", nullable = false)
-    @JsonBackReference
+    @JsonIgnoreProperties({"registrations"})
     private Event event;
     
     @Column(nullable = false)
