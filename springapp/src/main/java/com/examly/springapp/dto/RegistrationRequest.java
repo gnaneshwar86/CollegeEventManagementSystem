@@ -1,34 +1,13 @@
 package com.examly.springapp.dto;
 
+import jakarta.validation.constraints.NotNull;
+import lombok.Data;
+
+@Data
 public class RegistrationRequest {
+    @NotNull(message = "Student ID is required")
     private String studentId;
+    
+    @NotNull(message = "Event ID is required")
     private Long eventId;
-    
-    // Default constructor
-    public RegistrationRequest() {
-    }
-    
-    // Constructor with parameters
-    public RegistrationRequest(String studentId, Long eventId) {
-        this.studentId = studentId;
-        this.eventId = eventId;
-    }
-    
-    // Getters
-    public String getStudentId() {
-        return studentId;
-    }
-    
-    public Long getEventId() {
-        return eventId;
-    }
-    
-    // Setters
-    public void setStudentId(String studentId) {
-        this.studentId = studentId;
-    }
-    
-    public void setEventId(Long eventId) {
-        this.eventId = eventId;
-    }
 }
