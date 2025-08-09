@@ -1,0 +1,35 @@
+# VS Code
+.vscode/
+
+# JetBrains IDEs (IntelliJ, WebStorm, PyCharm, etc.)
+.idea/
+*.iml
+
+# Eclipse
+.project
+.classpath
+.csettings
+.settings/
+.metadata/
+
+# NetBeans
+nbproject/private/
+build/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
+
+# Sublime Text
+*.sublime-workspace
+*.sublime-project
+
+# Code::Blocks
+*.depend
+*.layout
+*.cbp
+*.autosave
+
+# Other common IDE metadata
+*.sw?
+*.log
