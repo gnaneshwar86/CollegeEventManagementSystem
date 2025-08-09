@@ -16,6 +16,11 @@ function Home() {
           <Grid item xs={12} md={6}>
             <Typography variant="h2" fontWeight="bold" color="#00809D" gutterBottom>
               Welcome to EventMate
+              College Event Management
+              Home
+              Student Dashboard
+              All Events
+              
             </Typography>
             <Typography variant="h6" color="text.secondary" >
               Your one-stop solution for managing college events, registrations, and student participation seamlessly.
