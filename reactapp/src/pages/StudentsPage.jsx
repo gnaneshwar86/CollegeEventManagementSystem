@@ -1,12 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Box, Typography, List, ListItem, ListItemText } from '@mui/material';
-import { getStudents } from '../services/studentService';
 
 function StudentsPage() {
-  const [students, setStudents] = useState([]);
+  // const [students, setStudents] = useState([]);
 
   useEffect(() => {
-    getStudents().then(setStudents).catch(console.error);
+    // getStudents().then(setStudents).catch(console.error);
   }, []);
 
   return (
@@ -15,11 +14,11 @@ function StudentsPage() {
         Students
       </Typography>
       <List>
-        {students.map((student) => (
+        {/* {students.map((student) => (
           <ListItem key={student.id}>
             <ListItemText primary={student.name} secondary={student.email} />
           </ListItem>
-        ))}
+        ))} */}
       </List>
     </Box>
   );

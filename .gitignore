@@ -1,38 +1,36 @@
+# Node
+node_modules/
+dist/
+build/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+*.log
+
+# Environment files
+.env
+.env.*.local
+
 # VS Code
 .vscode/
-# ---------------------
-# IntelliJ IDEA
-# ---------------------
+.history/
+
+# IntelliJ / JetBrains IDEs
 .idea/
-*.iws
 *.iml
+out/
 *.ipr
+*.iws
 
 # Eclipse
 .project
 .classpath
-.csettings
 .settings/
-.metadata/
 
-# NetBeans
-nbproject/private/
-build/
-nbbuild/
-dist/
-nbdist/
-.nb-gradle/
-
-# Sublime Text
-*.sublime-workspace
-*.sublime-project
-
-# Code::Blocks
-*.depend
-*.layout
-*.cbp
-*.autosave
-
-# Other common IDE metadata
-*.sw?
-*.log
+# Mac / Linux / Windows system files
+.DS_Store
+Thumbs.db
+*.swp

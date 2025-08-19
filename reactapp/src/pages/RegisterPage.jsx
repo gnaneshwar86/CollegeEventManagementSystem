@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Box, TextField, Button, Typography } from '@mui/material';
-import { registerStudent } from '../services/registrationService';
 
 function RegisterPage() {
   const [form, setForm] = useState({ name: '', email: '' });
@@ -10,7 +9,7 @@ function RegisterPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await registerStudent(form);
+      // await registerStudent(form);
       alert('Registration successful');
     } catch (err) {
       console.error(err);
