@@ -1,16 +1,15 @@
 package com.example.springapp.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "events")
@@ -19,29 +18,34 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Event {
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long eventId;
     
-    @NotBlank
+    @NotNull(message = "Event name is required")
     @Size(min = 5, max = 100, message = "eventName must be between 5 and 100 characters")
     private String eventName;
     
     private String description;
     
-    @NotNull
+    @NotNull(message = "Date is required")
     private LocalDate date;
     
-    @NotBlank
+    @NotNull(message = "Time is required")
     private String time;
     
-    @NotBlank
+    @NotNull(message = "Venue is required")
     private String venue;
     
-    @Min(value = 1, message = "Capacity must be at least 1")
+    @Positive(message = "Capacity must be a positive number")
     private Integer capacity;
     
     @Enumerated(EnumType.STRING)
-    @NotNull
+    @NotNull(message = "Event Category is required")
     private EventCategory category;
+    
+    @OneToMany(mappedBy = "event", cascade = CascadeType.ALL)
+    @JsonIgnoreProperties({"event"})
+    private List<Registration> registrations;
 }

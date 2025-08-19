@@ -4,5 +4,5 @@ public enum EventCategory {
     TECHNICAL,
     CULTURAL,
     SPORTS,
-    ACADEMIC
+    WORKSHOP
 }
