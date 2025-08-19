@@ -23,17 +23,15 @@ public class Student {
     private String studentId;
     
     @NotNull(message = "Name is required")
-    @Column(nullable = false)
     private String name;
     
     @NotNull(message = "Email is required")
     @Email(message = "Email must be a valid email format")
-    @Column(nullable = false, unique = true)
     private String email;
     
     private String department;
     
-    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
     @JsonIgnoreProperties({"student"})
     private List<Registration> registrations;
 }

@@ -23,12 +23,12 @@ public class Registration {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long registrationId;
     
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "student_id", nullable = false)
     @JsonIgnoreProperties({"registrations"})
     private Student student;
     
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "event_id", nullable = false)
     @JsonIgnoreProperties({"registrations"})
     private Event event;
