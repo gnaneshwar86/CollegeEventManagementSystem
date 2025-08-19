@@ -1,9 +1,12 @@
 # VS Code
 .vscode/
-
-# JetBrains IDEs (IntelliJ, WebStorm, PyCharm, etc.)
+# ---------------------
+# IntelliJ IDEA
+# ---------------------
 .idea/
+*.iws
 *.iml
+*.ipr
 
 # Eclipse
 .project
