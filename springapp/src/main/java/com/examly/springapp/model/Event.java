@@ -25,27 +25,32 @@ public class Event {
     
     @NotNull(message = "Event name is required")
     @Size(min = 5, max = 100, message = "eventName must be between 5 and 100 characters")
+    @Column(nullable = false)
     private String eventName;
     
     private String description;
     
     @NotNull(message = "Date is required")
+    @Column(nullable = false)
     private LocalDate date;
     
     @NotNull(message = "Time is required")
+    @Column(nullable = false)
     private String time;
     
     @NotNull(message = "Venue is required")
+    @Column(nullable = false)
     private String venue;
     
     @Positive(message = "Capacity must be a positive number")
+    @Column(nullable = false)
     private Integer capacity;
     
     @Enumerated(EnumType.STRING)
-    @NotNull(message = "Event Category is required")
+    @Column(nullable = false)
     private EventCategory category;
     
-    @OneToMany(mappedBy = "event", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "event", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIgnoreProperties({"event"})
     private List<Registration> registrations;
 }
