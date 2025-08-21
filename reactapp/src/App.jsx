@@ -3,30 +3,32 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Box } from '@mui/material';
 
 import Navbar from './components/Navbar';
-import RightSidebar from './components/RightSidebar';
 import Footer from './components/Footer';
 
 import Home from './pages/Home';
 import EventsPage from './pages/EventsPage';
-import RegisterPage from './pages/RegisterPage';
 import LoginPage from './pages/LoginPage';
-import Dashboard from './pages/Dashboard';
-import StudentsPage from './pages/StudentsPage';
+import AdminDashboard from './pages/AdminDashboard';
+import StudentDashboard from './pages/StudentDashboard';
+import Sidebar from './components/Sidebar';
+import RegistrationPage from './pages/RegistrationPage';
+import ScrollToTop from './components/ScrollToTop';
 
 function App() {
   return (
     <Router>
+      <ScrollToTop />
       <Navbar />
-      <RightSidebar />
+      {/* <Sidebar /> */}
 
-      <Box sx={{ paddingTop: '10vh', paddingRight: '15vw', minHeight: '100vh' }}>
+      <Box sx={{ paddingTop: '15vh', paddingRight: '0vw', minHeight: '100vh' }}>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/events" element={<EventsPage />} />
-          <Route path="/register" element={<RegisterPage />} />
+          <Route path="/register" element={<RegistrationPage />} />
           <Route path="/login" element={<LoginPage />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/students" element={<StudentsPage />} />
+          <Route path="/dashboard" element={<AdminDashboard />} />
+          <Route path="/students" element={<StudentDashboard />} />
         </Routes>
       </Box>
 

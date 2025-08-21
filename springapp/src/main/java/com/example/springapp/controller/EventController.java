@@ -1,50 +1,73 @@
 package com.example.springapp.controller;
 
 import com.example.springapp.model.Event;
+import com.example.springapp.model.EventCategory;
 import com.example.springapp.service.EventService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.http.HttpStatus;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Map;
-import java.util.Optional;
+import jakarta.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/events")
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "http://localhost:5173")
+@RequiredArgsConstructor
 public class EventController {
-    @Autowired
-    private EventService eventService;
-    
-    @PostMapping
-    public ResponseEntity<?> createEvent(@RequestBody Event event) {
-        try {
-            Event createdEvent = eventService.createEvent(event);
-            return ResponseEntity.status(HttpStatus.CREATED).body(createdEvent);
-        } catch (Exception e) {
-            return ResponseEntity.badRequest()
-                .body(Map.of("message", e.getMessage()));
-        }
-    }
-    
+
+    private final EventService eventService;
+
     @GetMapping
-    public ResponseEntity<Page<Event>> getAllEvents(
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size) {
-        Page<Event> events = eventService.getEvents(page, size);
-        return ResponseEntity.ok(events);
+    public List<Event> getAllEvents() {
+        return eventService.getAllEvents();
     }
-    
-    @GetMapping("/{eventId}")
-    public ResponseEntity<?> getEventById(@PathVariable Long eventId) {
-        Optional<Event> event = eventService.getEventById(eventId);
-        if (event.isPresent()) {
-            return ResponseEntity.ok(event.get());
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                .body(Map.of("message", "Event not found"));
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Event> getEventById(@PathVariable Long id) {
+        return eventService.getEventById(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    @PostMapping
+    public Event createEvent(@Valid @RequestBody Event event) {
+        return eventService.createEvent(event);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Event> updateEvent(@PathVariable Long id, @Valid @RequestBody Event eventDetails) {
+        try {
+            Event updatedEvent = eventService.updateEvent(id, eventDetails);
+            return ResponseEntity.ok(updatedEvent);
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
         }
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteEvent(@PathVariable Long id) {
+        eventService.deleteEvent(id);
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/category/{category}")
+    public List<Event> getEventsByCategory(@PathVariable EventCategory category) {
+        return eventService.getEventsByCategory(category);
+    }
+
+    @GetMapping("/department/{department}")
+    public List<Event> getEventsByDepartment(@PathVariable String department) {
+        return eventService.getEventsByDepartment(department);
+    }
+
+    @GetMapping("/upcoming")
+    public List<Event> getUpcomingEvents() {
+        return eventService.getUpcomingEvents();
+    }
+
+    @GetMapping("/available")
+    public List<Event> getAvailableEvents() {
+        return eventService.getAvailableEvents();
     }
 }

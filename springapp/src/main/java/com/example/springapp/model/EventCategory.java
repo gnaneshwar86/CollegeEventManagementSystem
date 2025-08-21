@@ -1,8 +1,12 @@
 package com.example.springapp.model;
 
 public enum EventCategory {
-    TECHNICAL,
+    WORKSHOP,
+    SEMINAR,
+    CONFERENCE,
+    HACKATHON,
     CULTURAL,
     SPORTS,
-    WORKSHOP
+    TECHNICAL,
+    OTHER
 }

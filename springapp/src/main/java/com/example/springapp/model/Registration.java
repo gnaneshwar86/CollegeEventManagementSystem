@@ -10,9 +10,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "registrations", uniqueConstraints = {
-    @UniqueConstraint(columnNames = {"student_id", "event_id"})
-})
 @Data
 @Builder
 @NoArgsConstructor

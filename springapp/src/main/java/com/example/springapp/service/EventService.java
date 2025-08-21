@@ -1,35 +1,75 @@
 package com.example.springapp.service;
 
 import com.example.springapp.model.Event;
+import com.example.springapp.model.EventCategory;
 import com.example.springapp.repository.EventRepository;
-import jakarta.validation.ValidationException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
+import com.example.springapp.repository.RegistrationRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class EventService {
-    @Autowired
-    private EventRepository eventRepository;
-    
+
+    private final EventRepository eventRepository;
+    private final RegistrationRepository registrationRepository;
+
+    public List<Event> getAllEvents() {
+        return eventRepository.findAll();
+    }
+
+    public Optional<Event> getEventById(Long id) {
+        return eventRepository.findById(id);
+    }
+
     public Event createEvent(Event event) {
-        if (event.getEventName() != null && event.getEventName().length() < 5) {
-            throw new ValidationException("eventName must be between 5 and 100 characters");
-        }
-        if (event.getCapacity() != null && event.getCapacity() < 1) {
-            throw new ValidationException("Capacity must be at least 1");
-        }
         return eventRepository.save(event);
     }
-    
-    public Page<Event> getEvents(int page, int size) {
-        return eventRepository.findAll(PageRequest.of(page, size));
+
+    public Event updateEvent(Long id, Event eventDetails) {
+        return eventRepository.findById(id)
+                .map(event -> {
+                    event.setEventName(eventDetails.getEventName());
+                    event.setDescription(eventDetails.getDescription());
+                    event.setDate(eventDetails.getDate());
+                    event.setTime(eventDetails.getTime());
+                    event.setVenue(eventDetails.getVenue());
+                    event.setDepartment(eventDetails.getDepartment());
+                    event.setCapacity(eventDetails.getCapacity());
+                    event.setCategory(eventDetails.getCategory());
+                    return eventRepository.save(event);
+                })
+                .orElseThrow(() -> new RuntimeException("Event not found with id: " + id));
     }
-    
-    public Optional<Event> getEventById(Long eventId) {
-        return eventRepository.findById(eventId);
+
+    public void deleteEvent(Long id) {
+        eventRepository.deleteById(id);
+    }
+
+    public List<Event> getEventsByCategory(EventCategory category) {
+        return eventRepository.findByCategory(category);
+    }
+
+    public List<Event> getEventsByDepartment(String department) {
+        return eventRepository.findByDepartment(department);
+    }
+
+    public List<Event> getUpcomingEvents() {
+        return eventRepository.findByDateAfter(LocalDate.now());
+    }
+
+    public List<Event> getAvailableEvents() {
+        return eventRepository.findAvailableEvents();
+    }
+
+    public boolean isEventFull(Long eventId) {
+        Event event = eventRepository.findById(eventId)
+                .orElseThrow(() -> new RuntimeException("Event not found"));
+        Long registrationCount = registrationRepository.countRegistrationsByEventId(eventId);
+        return registrationCount >= event.getCapacity();
     }
 }

@@ -12,7 +12,6 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Entity
-@Table(name = "events")
 @Data
 @Builder
 @NoArgsConstructor
@@ -37,11 +36,18 @@ public class Event {
     
     @NotNull(message = "Venue is required")
     private String venue;
-    
+
+    @NotNull(message = "Department is required")
+    private String department;
+
+    @Positive(message = "Capacity must be a positive number")
+    private Integer currentCapacity;
+
     @Positive(message = "Capacity must be a positive number")
     private Integer capacity;
     
     @Enumerated(EnumType.STRING)
+    @Column(length = 50, nullable = false)
     @NotNull(message = "Event Category is required")
     private EventCategory category;
     
