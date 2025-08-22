@@ -3,36 +3,28 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Box } from '@mui/material';
 
 import Navbar from './components/Navbar';
-import Footer from './components/Footer';
-
-import Home from './pages/Home';
-import EventsPage from './pages/EventsPage';
 import LoginPage from './pages/LoginPage';
 import AdminDashboard from './pages/AdminDashboard';
 import StudentDashboard from './pages/StudentDashboard';
-import Sidebar from './components/Sidebar';
 import RegistrationPage from './pages/RegistrationPage';
 import ScrollToTop from './components/ScrollToTop';
+import EventManagementSystem from './pages/EventManagementSystem';
 
 function App() {
   return (
     <Router>
       <ScrollToTop />
       <Navbar />
-      {/* <Sidebar /> */}
 
-      <Box sx={{ paddingTop: '15vh', paddingRight: '0vw', minHeight: '100vh' }}>
+      <Box sx={{ paddingTop: '15vh', minHeight: '100vh' }}>
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/events" element={<EventsPage />} />
-          <Route path="/register" element={<RegistrationPage />} />
+          <Route path="/" element={<StudentDashboard />} />
+          <Route path="/events" element={<EventManagementSystem />} />
+          <Route path="/register/:eventId" element={<RegistrationPage />} />
           <Route path="/login" element={<LoginPage />} />
-          <Route path="/dashboard" element={<AdminDashboard />} />
-          <Route path="/students" element={<StudentDashboard />} />
+          <Route path="/admindashboard" element={<AdminDashboard />} />
         </Routes>
       </Box>
-
-      <Footer />
     </Router>
   );
 }

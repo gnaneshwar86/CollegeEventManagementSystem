@@ -10,9 +10,12 @@ import {
   UserCheck
 } from 'lucide-react';
 import apiService from '../services/api';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
-const RegistrationPage = ({ eventId }) => {
+const RegistrationPage = () => {
+
+  const { eventId } = useParams();
+
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [event, setEvent] = useState(null);
@@ -78,7 +81,7 @@ const RegistrationPage = ({ eventId }) => {
   const navigate = useNavigate();
 
   const onBack = () => {
-    navigate(`/students`); 
+    navigate(`/`); 
   };
   // ✅ UI Rendering
   if (loading) {
