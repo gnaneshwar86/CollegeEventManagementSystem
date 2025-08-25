@@ -1,5 +1,5 @@
 // api.js - Full API service with JWT support
-const BASE_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:8080/api';
+const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
 class ApiService {
   // Helper method for making HTTP requests
