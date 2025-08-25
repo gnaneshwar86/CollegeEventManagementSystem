@@ -28,12 +28,14 @@ const AdminAuth = ({ onAuthSuccess }) => {
     }
 
     try {
-      const endpoint = isLogin ? '/api/admin/login' : '/api/admin/register';
+      const endpoint = isLogin ? '/admin/login' : '/admin/register';
       const payload = isLogin 
         ? { username: formData.username, password: formData.password }
         : { username: formData.username, email: formData.email, password: formData.password };
 
-      const response = await fetch(`http://localhost:8080${endpoint}`, {
+      const BASE_URL = import.meta.env.VITE_BACKEND_URL;
+
+        const response = await fetch(`${BASE_URL}${endpoint}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
